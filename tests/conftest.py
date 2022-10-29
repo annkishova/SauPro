@@ -1,6 +1,6 @@
 import pytest
 from selenium import webdriver
-from tests.constants import Url
+from utils.constants import Url
 from selenium.webdriver.common.by import By
 
 

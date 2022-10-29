@@ -1,4 +1,3 @@
-# Описать значок корзины, гет кол-ва товара, кнопки remove, checkout, continue shopping
 from selenium.webdriver.common.by import By
 from forms.login_form import BasePage
 from selenium.common.exceptions import NoSuchElementException
