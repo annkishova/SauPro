@@ -13,6 +13,7 @@ class BasketFormElements:
     REMOVE_BTN = (By.ID, "remove-sauce-labs-backpack")
     CONTINUE_BTN = (By.ID, "continue-shopping")
     CHECKOUT = (By.ID, "checkout")
+    #
 
 
 class BasketForm(BasePage):
