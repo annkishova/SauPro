@@ -44,10 +44,10 @@ class BasketForm(BasePage):
     def click_continue_btn(self):
         self.driver.find_element(*self.element.CONTINUE_BTN).click()
 
-    def check_price(self):
+    def check_price(self, value: str):
         text = self.driver.find_element(*self.element.ITEM_PRICE).text.replace(" ", "")
-        ord_c = list(i for i in text)
-        return str(ord_c[-1])
+        value = list(i for i in text)
+        return str(value[-1])
 
     def go_card_item(self):
         self.driver.find_element(*self.element.ITEM_NAME).click()
