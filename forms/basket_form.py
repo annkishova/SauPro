@@ -1,23 +1,42 @@
-# Описать значок корзины, гет кол-ва товара, кнопки remove, checkout, continue shopping
-from selenium.webdriver.common.by import By
 from forms.login_form import BasePage
-from selenium.common.exceptions import NoSuchElementException
-
-
-class BasketFormElements:
-    SHOPPING_CONT = (By.CLASS_NAME, "shopping_cart_link")
-    ITEM_COUNT = (By.CLASS_NAME, "cart_quantity")
-    ITEM = (By.CLASS_NAME, "cart_item")
-    ITEM_NAME = (By.ID, "item_4_title_link")
-    ITEM_PRICE = (By.CLASS_NAME, "inventory_item_price")
-    REMOVE_BTN = (By.ID, "remove-sauce-labs-backpack")
-    CONTINUE_BTN = (By.ID, "continue-shopping")
-    CHECKOUT = (By.ID, "checkout")
+from playwright.sync_api import Page, expect
 
 
 class BasketForm(BasePage):
-    element = BasketFormElements
+    def click_basket(self, page: Page):
+        go_bucket = page.locator('.shopping_cart_link')
+        go_bucket.click()
 
+    def click_checkout(self, page: Page):
+        checkout = page.locator('[id="checkout"]')
+        checkout.click()
+
+    def click_remove_btn(self, page: Page):
+        remove = page.locator('[id="remove-sauce-labs-backpack"]')
+        remove.click()
+
+    def click_continue_btn(self, page: Page):
+        continue_btn = page.locator('[id="continue-shopping"]')
+        continue_btn.click()
+
+    def go_card_item(self, page: Page):
+        go_card = page.locator('[id="item_4_title_link"]')
+        go_card.click()
+
+    def exist_basket_icon(self, page: Page):
+        locator = page.locator(".shopping_cart_link")
+        expect(locator).to_be_visible()
+
+    def burger_icon(self, page: Page):
+        locator = page.locator("[id='react-burger-menu-btn']")
+        expect(locator).to_be_visible()
+
+    """    
+    def check_price(self, value: str):
+        text = self.driver.find_element(*self.element.ITEM_PRICE).text.replace(" ", "")
+        value = list(i for i in text)
+        return str(value[-1])
+        
     def check_exists_basket(self):
         try:
             self.driver.find_element(*self.element.SHOPPING_CONT)
@@ -31,23 +50,4 @@ class BasketForm(BasePage):
         except NoSuchElementException:
             return False
         return True
-
-    def click_basket(self):
-        self.driver.find_element(*self.element.SHOPPING_CONT).click()
-
-    def click_checkout(self):
-        self.driver.find_element(*self.element.CHECKOUT).click()
-
-    def click_remove_btn(self):
-        self.driver.find_element(*self.element.REMOVE_BTN).click()
-
-    def click_continue_btn(self):
-        self.driver.find_element(*self.element.CONTINUE_BTN).click()
-
-    def check_price(self):
-        text = self.driver.find_element(*self.element.ITEM_PRICE).text.replace(" ", "")
-        ord_c = list(i for i in text)
-        return str(ord_c[-1])
-
-    def go_card_item(self):
-        self.driver.find_element(*self.element.ITEM_NAME).click()
+        """
