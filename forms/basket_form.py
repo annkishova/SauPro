@@ -6,6 +6,7 @@ class BasketForm(BasePage):
     def click_basket(self, page: Page):
         go_bucket = page.locator('.shopping_cart_link')
         go_bucket.click()
+        #
 
     def click_checkout(self, page: Page):
         checkout = page.locator('[id="checkout"]')
