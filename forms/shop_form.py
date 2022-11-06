@@ -1,24 +1,31 @@
+from selenium.webdriver.common.by import By
 from forms.login_form import BasePage
-from playwright.sync_api import Page, expect
+from selenium.common.exceptions import NoSuchElementException
+
+
+class ShopFormElements:
+    ADD_CART = (By.ID, "add-to-cart-sauce-labs-backpack")
+    ITEM_NAME = (By.CLASS_NAME, "inventory_item_name")
+    PRICE = (By.CLASS_NAME, "inventory_item_price")
+    COUNT_CART = (By.CLASS_NAME, "shopping_cart_badge")
 
 
 class ShopForm(BasePage):
+    element = ShopFormElements
+
     def add_basket(self):
-        add_backet = self.page.locator('[id="add-to-cart-sauce-labs-backpack"]')
-        add_backet.click()
+        self.driver.find_element(*self.element.ADD_CART).click()
 
-    def check_exists_item_bucket(self, page: Page):
-        locator = page.locator(".shopping_cart_badge")
-        expect(locator).to_be_visible()
+    def check_exists_item_busket(self):
+        try:
+            self.driver.find_element(*self.element.COUNT_CART)
+        except NoSuchElementException:
+            return False
+        return True
 
-    def check_exists_item(self, page: Page):
-        locator = page.locator(".inventory_item_name")
-        expect(locator).to_be_visible()
-
-    def exist_basket_icon(self, page: Page):
-        locator = page.locator(".shopping_cart_link")
-        expect(locator).to_be_visible()
-
-    def burger_icon(self, page: Page):
-        locator = page.locator("[id='react-burger-menu-btn']")
-        expect(locator).to_be_visible()
+    def check_exists_item(self):
+        try:
+            self.driver.find_element(*self.element.ITEM_NAME)
+        except NoSuchElementException:
+            return False
+        return True

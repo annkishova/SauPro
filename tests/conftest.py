@@ -1,13 +1,9 @@
 import pytest
-#from selenium import webdriver
+from selenium import webdriver
 from utils.constants import Url
-#from selenium.webdriver.common.by import By
-from playwright.sync_api import Page, expect
-from tests.test_2 import p
-import re
-from playwright.sync_api import sync_playwright
+from selenium.webdriver.common.by import By
 
-"""
+
 @pytest.fixture(scope="function")
 def start_browser():
     #"Запуск браузера"
@@ -19,31 +15,17 @@ def start_browser():
 
     #"Закрытие браузера"
     driver.quit()
-"""
 
 
 @pytest.fixture(scope="function")
-def navigate_start_page():
-    with sync_playwright() as play:
-        browser = play.chromium.launch()
-        page = browser.new_page()
-        page.goto(Url.login_url)
+def navigate_start_page(start_browser):
+    driver = start_browser
+    #"Переход на стартовую страницу")
+    driver.get(Url.login_url)
 
-        yield page
-
-        browser.close()
-
-    """
-    def navigate_start_page(start_browser):
-        driver = start_browser
-        #"Переход на стартовую страницу")
-        driver.get(Url.login_url)
-
-        yield driver
-    """
+    yield driver
 
 
-"""
 @pytest.fixture(scope="function")
 def fill_login_and_enter(navigate_start_page, username="standard_user", password="secret_sauce"):
     driver = navigate_start_page
@@ -52,4 +34,3 @@ def fill_login_and_enter(navigate_start_page, username="standard_user", password
     driver.find_element(By.ID, "login-button").click()
 
     yield driver
-"""
